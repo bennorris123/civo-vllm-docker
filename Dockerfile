@@ -16,10 +16,8 @@ RUN  apt install -y unzip wget cmake git sudo
 RUN  pip install pybind11
 RUN  wget https://github.com/kvcache-ai/Mooncake/archive/refs/heads/main.zip
 RUN  unzip main.zip
-WORKDIR Mooncake-main
-RUN bash dependencies.sh
-ENV PATH=$PATH:/usr/local/go/bin
-RUN mkdir build && cd build && cmake .. && make VERBOSE=1 && make install
+RUN  cd Mooncake-main && bash dependencies.sh && . ~/.bashrc && mkdir build && cd build \
+       && cmake .. && make VERBOSE=1 && make install
 
 # copy over the entry point
 COPY --chown=$MAMBA_USER:$MAMBA_USER entrypoint.sh /
